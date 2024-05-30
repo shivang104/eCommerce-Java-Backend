@@ -2,7 +2,7 @@ package com.demoProject.clients;
 
 import com.demoProject.DTO.FakeStoreProductCreationDTO;
 import com.demoProject.DTO.FakeStoreProductDTO;
-import com.demoProject.DTO.GenericProductDTO;
+import com.demoProject.DTO.ProductDTO;
 import com.demoProject.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -38,12 +38,12 @@ public class FakeStoreProductServiceClient implements ThirdPartyProductService{
         this.specificProductRequestUrl = fakeStoreApiUrl + fakeStoreProductsApiPath +" /{id}";
     }
 
-    private FakeStoreProductCreationDTO convertGenericProductDTOtoCreationDTO(GenericProductDTO product){
+    private FakeStoreProductCreationDTO convertGenericProductDTOtoCreationDTO(ProductDTO product){
         FakeStoreProductCreationDTO fakeStoreProductDTO = new FakeStoreProductCreationDTO();
         fakeStoreProductDTO.setImage(product.getImage());
         fakeStoreProductDTO.setDescription(product.getDescription());
         fakeStoreProductDTO.setTitle(product.getTitle());
-        fakeStoreProductDTO.setPrice(product.getPrice());
+        fakeStoreProductDTO.setPrice(product.getPrice().getPrice());
         fakeStoreProductDTO.setCategory(product.getCategory());
         return fakeStoreProductDTO;
     }
@@ -66,7 +66,7 @@ public class FakeStoreProductServiceClient implements ThirdPartyProductService{
     }
 
     @Override
-    public FakeStoreProductDTO createProduct(GenericProductDTO product) {
+    public FakeStoreProductDTO createProduct(ProductDTO product) {
         RestTemplate restTemplate = restTemplateBuilder.build();
         FakeStoreProductCreationDTO fakeStoreProductCreationDTO = convertGenericProductDTOtoCreationDTO(product);
         //make post call
@@ -105,7 +105,7 @@ public class FakeStoreProductServiceClient implements ThirdPartyProductService{
     }
 
     @Override
-    public FakeStoreProductDTO updateProductById(Long id, GenericProductDTO product) throws NotFoundException {
+    public FakeStoreProductDTO updateProductById(Long id, ProductDTO product) throws NotFoundException {
         RestTemplate restTemplate = restTemplateBuilder.build();
         //make put call
         FakeStoreProductCreationDTO fakeStoreProductCreationDTO = convertGenericProductDTOtoCreationDTO(product);
