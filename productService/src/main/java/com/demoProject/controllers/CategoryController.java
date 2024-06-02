@@ -13,14 +13,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/category/")
+@RequestMapping("/category")
 public class CategoryController {
     private CategoryService categoryService;
     public CategoryController(CategoryService categoryService){
         this.categoryService = categoryService;
     }
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     ResponseEntity<CategoryDTO> getCategoryById(@PathVariable("id") UUID id) throws NotFoundException {
         ResponseEntity<CategoryDTO> responseEntity = new ResponseEntity<>(
                 categoryService.getCategoryById(id),
@@ -47,7 +47,7 @@ public class CategoryController {
         return response;
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/{id}")
     ResponseEntity<CategoryDTO> updateCategory(@PathVariable("id") UUID id, @RequestBody Category category) throws NotFoundException {
         ResponseEntity<CategoryDTO> response = new ResponseEntity<>(
                 categoryService.updateCategory(id, category),
@@ -56,7 +56,7 @@ public class CategoryController {
         return response;
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     ResponseEntity<CategoryDTO> deleteCategory(@PathVariable("id") UUID id) throws NotFoundException {
         ResponseEntity<CategoryDTO> response = new ResponseEntity<>(
                 categoryService.deleteCategory(id),
@@ -65,7 +65,7 @@ public class CategoryController {
         return response;
     }
 
-    @GetMapping("getProducts/{id}")
+    @GetMapping("/getProducts/{id}")
     ResponseEntity<List<ProductDTO>> getAllProductsInCategory(@PathVariable("id") UUID id) throws NotFoundException {
         ResponseEntity<List<ProductDTO>> response = new ResponseEntity<>(
                 categoryService.getAllProductsInCategory(id),
